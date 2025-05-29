@@ -97,6 +97,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.vcxproj
 
 # Chutzpah Test files
 _Chutzpah*
@@ -230,6 +231,7 @@ _pkginfo.txt
 !?*.[Cc]ache/
 
 # Others
+FTPClient/FTPClient/TestFile
 ClientBin/
 ~$*
 *~
