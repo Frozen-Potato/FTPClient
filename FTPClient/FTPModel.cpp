@@ -116,7 +116,7 @@ bool FTPModel::download(const std::string& remoteFile, const std::string localFi
 	char* eff_url = nullptr;
 	curl_easy_getinfo(static_cast<CURL*>(curl), CURLINFO_EFFECTIVE_URL, &eff_url);
 
-	std::string remoteFileUrl = eff_url + remoteFile;
+	std::string remoteFileUrl = eff_url ? eff_url : "" + remoteFile;
 
 	std::cout << "Downloading from: " << eff_url << remoteFile << "\n"
 		<< "Saving to:      " << localFile << "\n";
