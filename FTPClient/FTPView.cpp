@@ -11,6 +11,10 @@ void FTPView::showMenu() {
 		<< "Select: ";
 }
 
+void FTPView::showCurrentDirectory(const std::string& cwd) {
+	std::cout << "Current directory: " << cwd << "\n";
+}
+
 void FTPView::showList(const std::vector<std::string>& items) {
 	for (auto& item : items) std::cout << item << "\n";
 	std::cout << std::endl;

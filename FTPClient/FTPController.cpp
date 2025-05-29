@@ -25,6 +25,8 @@ void FTPController::run() {
 
     bool running = true;
     while (running) {
+        std::string current = model.getCurrentDirectory();
+        view.showCurrentDirectory(current);
         view.showMenu();
         std::string choice = view.prompt("");
 

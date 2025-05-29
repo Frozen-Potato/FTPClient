@@ -45,6 +45,16 @@ void FTPModel::setPassiveMode(bool passive) {
 	}
 }
 
+std::string FTPModel::getCurrentDirectory() {
+	std::string current = "";
+	if (curl) {
+		char* effectiveUrl = nullptr;
+		curl_easy_getinfo(static_cast<CURL*>(curl), CURLINFO_EFFECTIVE_URL, &effectiveUrl);
+		current = effectiveUrl ? effectiveUrl : "";
+	}
+	return current;
+}
+
 bool FTPModel::connect(const std::string& server, const std::string& user, const std::string& pwd) {
 	if (!curl) return false;
 
