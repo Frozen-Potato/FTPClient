@@ -231,7 +231,7 @@ _pkginfo.txt
 !?*.[Cc]ache/
 
 # Others
-FTPClient/FTPClient/TestFile
+FTPClient/TestFile
 ClientBin/
 ~$*
 *~
@@ -363,3 +363,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# C++ dependency
+x64/
+FTPClient/x64/
+FTPClient/vcpkg_installed/
