@@ -105,6 +105,10 @@ bool FTPModel::cd(const std::string& path) {
 	CURLcode res = curl_easy_perform(static_cast<CURL*>(curl));
 	curl_easy_setopt(static_cast<CURL*>(curl), CURLOPT_NOBODY, 0L);
 
+	if (res != CURLE_OK) {
+		curl_easy_setopt(static_cast<CURL*>(curl), CURLOPT_URL, base.c_str());
+	}
+
 	return (res == CURLE_OK);
 }
 
