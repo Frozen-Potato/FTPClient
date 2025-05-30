@@ -49,7 +49,15 @@ void FTPController::run() {
             else
                 view.showMsg("Download failed.");
         }
-        else if (choice == "4") {
+        else if (choice =="4") {
+            std::string local = view.prompt("Uploadng from local file: ");
+            std::string remote = view.prompt("To remote file URL: ");
+            if (model.upload(remote, local))
+                view.showMsg("Upload succeeded.");
+            else
+                view.showMsg("Upload failed.");
+        }
+        else if (choice == "5") {
             model.disconnect();
             view.prompt("Disconnected");
             running = false;

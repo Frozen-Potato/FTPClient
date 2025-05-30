@@ -7,7 +7,8 @@ void FTPView::showMenu() {
 		<< "1. List Directory\n"
 		<< "2. Chenge Directory\n"
 		<< "3. Download File\n"
-		<< "4. Quit\n"
+		<< "4. Upload File\n"
+		<< "5. Quit\n"
 		<< "Select: ";
 }
 

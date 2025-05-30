@@ -17,6 +17,7 @@ public:
 	std::vector<std::string> list();
 	bool cd(const std::string& path);
 	bool download(const std::string& remoteFile, const std::string localFile);
+	bool upload(const std::string& remoteFile, const std::string localFile);
 	void disconnect();
 
 };
