@@ -30,47 +30,66 @@ void FTPController::run() {
         view.showMenu();
         std::string choice = view.prompt("");
 
-        if (choice == "1") {
-            auto list = model.list();
-            view.showList(list);
+        int userChoice = -69;
+
+        try {
+            userChoice = std::stoi(choice);
         }
-        else if (choice == "2") {
-            std::string dir = view.prompt("Enter directory: ");
-            if (model.cd(dir))
-                view.showMsg("Directory changed.");
-            else
-                view.showMsg("Failed to change directory.");
+        catch (...) {
+            userChoice = -69;
         }
-        else if (choice == "3") {
-            std::string remote = view.prompt("Remote file URL: ");
-            std::string local = view.prompt("Save as local file: ");
-            if (model.download(remote, local))
-                view.showMsg("Download succeeded.");
-            else
-                view.showMsg("Download failed.");
-        }
-        else if (choice =="4") {
-            std::string local = view.prompt("Uploadng from local file: ");
-            std::string remote = view.prompt("To remote file URL: ");
-            if (model.upload(remote, local))
-                view.showMsg("Upload succeeded.");
-            else
-                view.showMsg("Upload failed.");
-        }
-        else if (choice == "5") {
-            std::string remote = view.prompt("Remote File for Delete: ");
-            if (model.deleteFile(remote))
-                view.showMsg("Delete succeeded");
-            else 
-                view.showMsg("Delete Failed");
-        }
-        else if (choice == "6") {
-            model.disconnect();
-            view.prompt("Disconnected");
-            running = false;
-        }
-        else {
-            view.showMsg("Invalid option.");
+
+        switch (userChoice) {
+            case 1: {
+                auto list = model.list();
+                view.showList(list);
+                break;
+            }
+            case 2: {
+                std::string dir = view.prompt("Enter directory: ");
+                if (model.cd(dir))
+                    view.showMsg("Directory changed.");
+                else
+                    view.showMsg("Failed to change directory.");
+                break;
+            }
+            case 3: {
+                std::string remote = view.prompt("Remote file URL: ");
+                std::string local = view.prompt("Save as local file: ");
+                if (model.download(remote, local))
+                    view.showMsg("Download succeeded.");
+                else
+                    view.showMsg("Download failed.");
+                break;
+            }
+            case 4: {
+                std::string local = view.prompt("Uploadng from local file: ");
+                std::string remote = view.prompt("To remote file URL: ");
+                if (model.upload(remote, local))
+                    view.showMsg("Upload succeeded.");
+                else
+                    view.showMsg("Upload failed.");
+                break;
+            }
+            case 5: {
+                std::string remote = view.prompt("Remote File for Delete: ");
+                if (model.deleteFile(remote))
+                    view.showMsg("Delete succeeded");
+                else
+                    view.showMsg("Delete Failed");
+                break;
+            }
+            case 6:
+            {
+                model.disconnect();
+                view.prompt("Disconnected");
+                running = false;
+                break;
+            }
+            default: {
+                view.showMsg("Invalid option.");
+                break;
+            }
         }
     }
 };
