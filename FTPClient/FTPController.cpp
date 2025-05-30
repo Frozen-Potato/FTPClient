@@ -58,6 +58,13 @@ void FTPController::run() {
                 view.showMsg("Upload failed.");
         }
         else if (choice == "5") {
+            std::string remote = view.prompt("Remote File for Delete: ");
+            if (model.deleteFile(remote))
+                view.showMsg("Delete succeeded");
+            else 
+                view.showMsg("Delete Failed");
+        }
+        else if (choice == "6") {
             model.disconnect();
             view.prompt("Disconnected");
             running = false;

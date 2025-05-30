@@ -98,7 +98,7 @@ std::vector<std::string> FTPModel::list() {
 			if (!line.empty()) entries.push_back(line);
 		}
 	}
-
+	curl_easy_setopt(easyCurl, CURLOPT_DIRLISTONLY, 0L);
 	return entries;
 }
 
@@ -177,7 +177,7 @@ bool FTPModel::upload(const std::string& remoteFile, const std::string localFile
 	std::ifstream ifs(localFile, std::ios::binary);
 
 	curl_easy_setopt(easyCurl, CURLOPT_URL, remoteFileUrl.c_str());
-
+	curl_easy_setopt(easyCurl, CURLOPT_DIRLISTONLY, 0L);
 	curl_easy_setopt(easyCurl, CURLOPT_UPLOAD, 1L);
 	curl_easy_setopt(easyCurl, CURLOPT_READFUNCTION, uploadingFile);
 	curl_easy_setopt(easyCurl, CURLOPT_READDATA, &ifs);
@@ -189,11 +189,41 @@ bool FTPModel::upload(const std::string& remoteFile, const std::string localFile
 	return (res == CURLE_OK);
 }
 
+bool FTPModel::deleteFile(const std::string& remoteFile) {
+	if (!curl) return false;
+
+	CURL* easyCurl = static_cast<CURL*>(curl);
+
+	char* eff_url = nullptr;
+	curl_easy_getinfo(easyCurl, CURLINFO_EFFECTIVE_URL, &eff_url);
+
+	std::string base = eff_url ? eff_url : "";
+
+	if (!base.empty() && base.back() != '/') base.push_back('/');
+	std::string remoteFileUrl = base + remoteFile;
+
+	std::cout << "Attempting to Delete :" << remoteFileUrl << "\n";
+
+	struct curl_slist* cmdlist = NULL;
+
+	std::string command = "DELE " + remoteFile;
+
+	cmdlist = curl_slist_append(cmdlist, command.c_str());
+	curl_easy_setopt(easyCurl, CURLOPT_DIRLISTONLY, 0L);
+	curl_easy_setopt(easyCurl, CURLOPT_QUOTE, cmdlist);
+
+	CURLcode res = curl_easy_perform(easyCurl);
+
+	curl_easy_setopt(easyCurl, CURLOPT_QUOTE, 0L);
+	curl_easy_setopt(easyCurl, CURLOPT_URL, base.c_str());
+
+	return (res == CURLE_OK);
+}
+
 void FTPModel::disconnect() {
 	if (!curl) return;
 
 	CURL* easyCurl = static_cast<CURL*>(curl);
-
-	curl_easy_setopt(easyCurl, CURLOPT_QUICK_EXIT, 1L);
+	curl_easy_setopt(easyCurl, CURLOPT_CUSTOMREQUEST, "QUIT");
 	curl_easy_perform(easyCurl);
 }

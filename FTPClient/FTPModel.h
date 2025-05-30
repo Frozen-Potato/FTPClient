@@ -18,6 +18,7 @@ public:
 	bool cd(const std::string& path);
 	bool download(const std::string& remoteFile, const std::string localFile);
 	bool upload(const std::string& remoteFile, const std::string localFile);
+	bool deleteFile(const std::string& remoteFile);
 	void disconnect();
 
 };
