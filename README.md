@@ -7,7 +7,7 @@ This is an attempt at FTP Client in C++
 
 - CONNECT (both passive and active)
 - LIST
-- Change directory
+- CD
 - DELETE
 - COPY (upload and download)
 
