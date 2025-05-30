@@ -209,13 +209,16 @@ bool FTPModel::deleteFile(const std::string& remoteFile) {
 	std::string command = "DELE " + remoteFile;
 
 	cmdlist = curl_slist_append(cmdlist, command.c_str());
-	curl_easy_setopt(easyCurl, CURLOPT_DIRLISTONLY, 0L);
+	curl_easy_setopt(easyCurl, CURLOPT_NOBODY, 1L);
+	curl_easy_setopt(easyCurl, CURLOPT_URL, base.c_str());
 	curl_easy_setopt(easyCurl, CURLOPT_QUOTE, cmdlist);
 
 	CURLcode res = curl_easy_perform(easyCurl);
 
-	curl_easy_setopt(easyCurl, CURLOPT_QUOTE, 0L);
-	curl_easy_setopt(easyCurl, CURLOPT_URL, base.c_str());
+	curl_easy_setopt(easyCurl, CURLOPT_NOBODY, 0L);
+	curl_easy_setopt(easyCurl, CURLOPT_QUOTE, nullptr);
+	curl_slist_free_all(cmdlist);
+	
 
 	return (res == CURLE_OK);
 }

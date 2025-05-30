@@ -26,6 +26,7 @@ std::string FTPView::prompt(const std::string& msg) {
 	std::cout << msg;
 	std::string input;
 	std::getline(std::cin, input);
+	std::cout << "\n";
 	return input;
 }
 
