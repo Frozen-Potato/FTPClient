@@ -6,10 +6,10 @@ void FTPController::run() {
 	bool passive = (mode == "y" || mode == "Y");
 
     if (passive) {
-        view.prompt("Mode set to passive");
+        view.showMsg("Mode set to passive");
     }
     else {
-        view.prompt("Mode set to active");
+        view.showMsg("Mode set to active");
     }
 
 	model.setPassiveMode(passive);
